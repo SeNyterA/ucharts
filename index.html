@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Vite App</title>
+    <script src="https://cdn.jsdelivr.net/npm/echarts@latest/dist/echarts.min.js"></script>
+  </head>
+  <body>
+    <div class="w-screen h-screen flex-col flex p-10">
+      <div>
+        <div class="flex gap-6">
+          <div>
+            <label
+              for="chartType"
+              class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+              >Chart Type</label
+            >
+            <select
+              id="chartType"
+              class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+            >
+              <option value="bar">Bar</option>
+              <option value="line">Line</option>
+              <option value="pie">Pie</option>
+              <option value="doughnut">Doughnut</option>
+              <option value="radar">Radar</option>
+              <option value="polarArea">Polar Area</option>
+            </select>
+          </div>
+
+          <div>
+            <label
+              for="labelPosition"
+              class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+              >Label Position</label
+            >
+            <select
+              id="labelPosition"
+              class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+            >
+              <option value="top">Top</option>
+              <option value="bottom">Bottom</option>
+              <option value="left">Left</option>
+              <option value="right">Right</option>
+            </select>
+          </div>
+
+          <div>
+            <label
+              for="orientation"
+              class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+              >Label Position</label
+            >
+            <select
+              id="orientation"
+              class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+            >
+              <option value="horizontal">Horizontal</option>
+              <option value="vertical">Vertical</option>
+            </select>
+          </div>
+
+          <div class="flex-1">
+            <label
+              for="chartLabels"
+              class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+              >Labels</label
+            >
+            <input
+              type="text"
+              id="chartLabels"
+              class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+              placeholder="Label 1:Label 2:Label 3"
+              required
+            />
+          </div>
+        </div>
+        <div class="mt-2 flex gap-6">
+          <div class="flex-1">
+            <label
+              for="jsonInput"
+              class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+              >Data (JSON)</label
+            >
+
+            <textarea
+              id="jsonInput"
+              rows="4"
+              class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+              placeholder='{"data":[120, 200, 150, 80, 70, 110, 130]}'
+              required
+            ></textarea>
+          </div>
+          <div class="flex-1">
+            <label
+              for="config"
+              class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+              >Config</label
+            >
+
+            <textarea
+              id="config"
+              rows="4"
+              class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+              placeholder='[
+  { "name": "Tags 1","stack": "A"},
+  { "name": "Tags 2", "stack": "A" },
+  { "name": "Tags 3", "stack": "B" }
+]'
+              required
+            ></textarea>
+          </div>
+        </div>
+      </div>
+      <div id="chart" class="flex-1 mt-10"></div>
+    </div>
+
+    <script type="module" src="/main.js"></script>
+  </body>
+</html>
