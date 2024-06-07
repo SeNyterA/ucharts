@@ -1,5 +1,5 @@
-import './index.css'
 import * as echarts from 'echarts'
+import './index.css'
 
 
 // const chartDom = document.getElementById('chart')
@@ -197,36 +197,42 @@ import * as echarts from 'echarts'
 
 
 const createBarChart = ({
+  chartDom,
   data = [],
   labels = [],
   orientation = 'horizontal',
-  configs = []
+  configs = [], colors = [],
+  title = {
+    text: 'Bar Chart',
+    subtext: 'ECharts bar chart',
+    left: 'center',
+    // top: 0,
+    // right: 20,
+    bottom: 20
+  }
 }) => {
-  const chartDom = document.getElementById('chart')
+
   const myChart = echarts.init(chartDom)
   const option = {
+    color: colors,
+    title: title,
     tooltip: {
       trigger: 'axis',
       axisPointer: {
         type: 'shadow'
       }
     },
+    toolbox: {
+      feature: {
+        magicType: {
+          type: ['stack']
+        },
+        dataView: {}
+      }
+    },
     legend: {},
     grid: {
-      left: '0%',
-      right: '4%',
-      bottom: '3%',
       containLabel: true
-    },
-    toolbox: {
-      show: true,
-      feature: {
-        mark: { show: true },
-        dataView: { show: true, readOnly: false },
-        magicType: { show: true, type: ['line', 'bar', 'stack', 'tiled'] },
-        restore: { show: true },
-        saveAsImage: { show: true },
-      }
     },
     series:
       configs.map(
@@ -264,9 +270,80 @@ const createBarChart = ({
   }
 
   myChart.setOption(option)
+  return myChart
 }
 
+
+const createLineChart = ({
+  chartDom,
+  data = [],
+  labels = [],
+  configs = [],
+  colors = [],
+  title = {
+    text: 'Bar Chart',
+    subtext: 'ECharts bar chart',
+    left: 'center',
+    // top: 0,
+    // right: 20,
+    bottom: 20
+  }
+}) => {
+
+  const myChart = echarts.init(chartDom)
+  const option = {
+    title: title,
+    color: colors,
+    tooltip: {
+      trigger: 'axis',
+      axisPointer: {
+        type: 'shadow'
+      }
+    },
+    legend: {},
+    toolbox: {
+      feature: {
+        magicType: {
+          type: ['stack']
+        },
+        dataView: {}
+      }
+    },
+    grid: {
+      containLabel: true
+    },
+    yAxis: {
+      type: 'value'
+    },
+    xAxis: {
+      type: 'category',
+      data: labels
+    },
+    series:
+      configs.map(
+        (config, index) => ({
+          name: config.name,
+          type: 'line',
+          smooth: config.smooth,
+          label: {
+            show: true
+          },
+          emphasis: {
+            focus: 'series'
+          },
+          data: data[index]
+        })
+      )
+  }
+  myChart.setOption(option)
+  return myChart
+}
+
+
+
+const chartDom = document.getElementById('chart')
 createBarChart({
+  chartDom,
   data: [
     [320, 302, 301, 334, 390, 330, 320],
     [120, 132, 101, 134, 90, 230, 210],
@@ -282,5 +359,43 @@ createBarChart({
     { name: 'Affiliate Ad', stack: 'B' },
     { name: 'Video Ad', stack: 'A' },
     { name: 'Search Engine', stack: 'C' }
-  ]
+  ],
+  colors: ['#FF0000', '#00FF00', '#0000FF', '#FFFF00', '#00FFFF'],
+  title: {
+    text: 'Bar Chart',
+    subtext: 'ECharts bar chart',
+    left: 'center',
+    // top: 0,
+    // right: 20,
+    bottom: 20
+  },
 })
+
+
+// createLineChart({
+//   data: [
+//     [320, 302, 301, 334, 390, 330, 320],
+//     [120, 132, 101, 134, 90, 230, 210],
+//     [220, 182, 191, 234, 290, 330, 310],
+//     [150, 212, 201, 154, 190, 330, 410],
+//     [820, 832, 901, 934, 1290, 1330, 1320]
+//   ],
+//   labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+//   configs: [
+//     { name: 'Test', smooth: true },
+//     { name: 'Mail Ad', smooth: true },
+//     { name: 'Affiliate Ad' },
+//     { name: 'Video Ad' },
+//     { name: 'Search Engine' },
+
+//   ],
+//   colors: ['#FF0000', '#00FF00', '#0000FF', '#FFFF00', '#00FFFF'],
+//   title: {
+//     text: 'Bar Chart',
+//     subtext: 'ECharts bar chart',
+//     left: 'center',
+//     // top: 0,
+//     // right: 20,
+//     bottom: 20
+//   },
+// })
