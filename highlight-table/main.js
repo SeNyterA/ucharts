@@ -31,14 +31,30 @@ users.forEach(user => {
 
 const searchInput = document.querySelector('#searchInput');
 
+function highlightText(node, regex) {
+  if (node.nodeType === Node.TEXT_NODE) {
+    if (node.textContent.match(regex)) {
+      const newElement = document.createElement('span');
+      newElement.innerHTML = node.textContent.replace(regex, '<mark>$&</mark>');
+      node.parentNode.replaceChild(newElement, node);
+    }
+  } else {
+    node.childNodes.forEach((child) => highlightText(child, regex));
+  }
+}
+
 searchInput.addEventListener('input', (event) => {
   const searchTerm = event.target.value;
   const regex = new RegExp(searchTerm, 'gi');
   document.querySelectorAll('#userTable td').forEach((cell) => {
-    cell.innerHTML = cell.textContent;
-    if (!searchTerm) {
-      return;
-    }
-    cell.innerHTML = cell.textContent.replace(regex, (match) => `<mark>${match}</mark>`);
+    cell.innerHTML = cell.innerHTML.replace(/<mark>(.*?)<\/mark>/g, '$1');
+    cell.innerHTML = cell.innerHTML.replace(/<span>(.*?)<\/span>/g, '$1');
+  });
+  if (!searchTerm) {
+    return;
+  }
+  document.querySelectorAll('#userTable td').forEach((cell) => {
+
+    highlightText(cell, regex);
   });
 });
