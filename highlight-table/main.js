@@ -1,24 +1,44 @@
-import './style.css'
-import javascriptLogo from './javascript.svg'
-import viteLogo from '/vite.svg'
-import { setupCounter } from './counter.js'
 
-document.querySelector('#app').innerHTML = `
-  <div>
-    <a href="https://vitejs.dev" target="_blank">
-      <img src="${viteLogo}" class="logo" alt="Vite logo" />
-    </a>
-    <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript" target="_blank">
-      <img src="${javascriptLogo}" class="logo vanilla" alt="JavaScript logo" />
-    </a>
-    <h1>Hello Vite!</h1>
-    <div class="card">
-      <button id="counter" type="button"></button>
-    </div>
-    <p class="read-the-docs">
-      Click on the Vite logo to learn more
-    </p>
-  </div>
-`
+const users = [
+  { id: 1, name: 'User 1', email: 'user1@example.com', phone: '123-456-7890', address: 'Address 1' },
+  { id: 2, name: 'User 2', email: 'user2@example.com', phone: '123-456-7890', address: 'Address 2' },
+];
 
-setupCounter(document.querySelector('#counter'))
+const tableBody = document.querySelector('#userTable tbody');
+
+users.forEach(user => {
+  const row = document.createElement('tr');
+  Object.entries(user).forEach(([key, value]) => {
+    const cell = document.createElement('td');
+    if (key === 'email') {
+      const mailtoLink = document.createElement('a');
+      mailtoLink.href = `mailto:${value}`;
+      mailtoLink.textContent = value;
+      cell.appendChild(mailtoLink);
+    } else if (key === 'phone') {
+      const telLink = document.createElement('a');
+      telLink.href = `tel:${value}`;
+      telLink.textContent = value;
+      cell.appendChild(telLink);
+    } else {
+      cell.textContent = value;
+    }
+    row.appendChild(cell);
+  });
+
+  tableBody.appendChild(row);
+});
+
+const searchInput = document.querySelector('#searchInput');
+
+searchInput.addEventListener('input', (event) => {
+  const searchTerm = event.target.value;
+  const regex = new RegExp(searchTerm, 'gi');
+  document.querySelectorAll('#userTable td').forEach((cell) => {
+    cell.innerHTML = cell.textContent;
+    if (!searchTerm) {
+      return;
+    }
+    cell.innerHTML = cell.textContent.replace(regex, (match) => `<mark>${match}</mark>`);
+  });
+});
