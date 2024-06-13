@@ -5,7 +5,6 @@ const createOHLC = ({
   data = [],
   labels = [],
   theme = "dark",
-  configs = [],
   colors = [],
   title = {
     text: "OHLC Chart",
